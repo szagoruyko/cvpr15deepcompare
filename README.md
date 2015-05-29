@@ -48,6 +48,12 @@ We provide the models in 3 formats, two are Torch7 "nn" and "cudnn" formats and 
 | liberty | yosemite | 7 | **5** | 6.18 | 14.76 | 9.39 |
 | liberty | notredame | 2.76 | **1.9** | 2.77 | 4.04 | 2.82 |
 
+To save time downloading models one by one run the script (downloads ~375MB):
+
+```
+./download_pack.sh
+```
+
 #### nn format
 
 Models in nn format can be loaded and used without CUDA support in Torch. To enable CUDA support ```model:cuda()``` call required.
