@@ -60,7 +60,7 @@ Models in nn format can be loaded and used without CUDA support in Torch. To ena
 
 #### cudnn format
 
-Model in cudnn format are faster, but need a special library from NVIDIA. Check https://github.com/soumith/cudnn.torch 
+Models in cudnn format are faster, but need a special library from NVIDIA. Check https://github.com/soumith/cudnn.torch 
 
 | Train Set | 2ch | 2ch2stream | 2chdeep | siam | siam2stream |
 | --- |  :---: |  :---: |  :---: |  :---: |  :---: |
@@ -70,7 +70,11 @@ Model in cudnn format are faster, but need a special library from NVIDIA. Check 
 
 #### binary format
 
-Same table, not here yet.
+| Train Set | 2ch | 2ch2stream | 2chdeep | siam | siam2stream |
+| --- |  --- |  --- |  --- |  --- |  --- |
+| yosemite | [3.48 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2ch/2ch_yosemite.bin) | [8.98 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2ch2stream/2ch2stream_yosemite.bin) | [4.13 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2chdeep/2chdeep_yosemite.bin) | [4.47 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam/siam_yosemite.bin) | [13.17 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam2stream/siam2stream_yosemite.bin) |
+| notredame | [3.48 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2ch/2ch_notredame.bin) | [8.98 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2ch2stream/2ch2stream_notredame.bin) | [4.13 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2chdeep/2chdeep_notredame.bin) | [4.47 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam/siam_notredame.bin) | [13.17 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam2stream/siam2stream_notredame.bin) |
+| liberty | [3.48 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2ch/2ch_liberty.bin) | [8.98 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2ch2stream/2ch2stream_liberty.bin) | [4.13 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2chdeep/2chdeep_liberty.bin) | [4.47 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam/siam_liberty.bin) | [13.17 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam2stream/siam2stream_liberty.bin) |
 
 ### C++ code
 
@@ -84,3 +88,10 @@ mkdir build; cd build;
 cmake .. -DCMAKE_INSTALL_PREFIX=../install
 make -j4 install
 ```
+
+### MATLAB
+
+### OpenCV
+
+OpenCV example is here to demonstrate how to use the deep CNN models to match image patches, how to preprocess the patches and use the proposed API.
+
