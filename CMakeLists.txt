@@ -1,7 +1,8 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8 FATAL_ERROR)
 CMAKE_POLICY(VERSION 2.8)
 
-FIND_PACKAGE(OpenCV REQUIRED)
+ADD_SUBDIRECTORY(cunnproduction)
+
 FIND_PACKAGE(CUDA 7.0 REQUIRED)
 FIND_PACKAGE(Torch REQUIRED)
 
@@ -11,13 +12,12 @@ set(CUDA_NVCC_FLAGS -std=c++11)
 INCLUDE_DIRECTORIES(
   "${Torch_INSTALL_INCLUDE}/THC"
   ${OpenCV_INCLUDE_DIRS}
-  /opt/rocks/cunn-release/
+  cunnproduction
 )
 
-CUDA_ADD_EXECUTABLE(example example.cu ../loader.cpp)
+CUDA_ADD_EXECUTABLE(test test.cpp loader.cpp)
 
 LINK_DIRECTORIES("${Torch_INSTALL_LIB}")
-TARGET_LINK_LIBRARIES(example
-  /opt/rocks/cunn-release/build/libcunnproduction.so
-  TH THC
-  opencv_core opencv_highgui opencv_imgproc opencv_imgcodecs opencv_features2d)
+TARGET_LINK_LIBRARIES(test
+  cunnproduction
+  TH THC)
