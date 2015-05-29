@@ -44,6 +44,11 @@ int main(int argc, char** argv)
   THCudaInit(state);
 
   FILE *f = fopen("test_data.bin", "rb");
+  if(f == NULL)
+  {
+    std::cout << "test_data.bin file not found, exiting\n";
+    return 1;
+  }
   int num = 0;
   int bs = 0; 
   fread(&num, sizeof(int), 1, f);
