@@ -1,17 +1,20 @@
+// Copyright 2015 Sergey Zagoruyko, Nikos Komodakis
+// sergey.zagoruyko@imagine.enpc.fr, nikos.komodakis@enpc.fr
+// Ecole des Ponts ParisTech, Universite Paris-Est, IMAGINE
+//
+// The software is free to use only for non-commercial purposes.
+// IF YOU WOULD LIKE TO USE IT FOR COMMERCIAL PURPOSES, PLEASE CONTACT
+// Prof. Nikos Komodakis (nikos.komodakis@enpc.fr)
 #include <iostream>
 #include <cunn.h>
-
-#define PRECISION 1e-5
+#include "loader.h"
 
 #define ANSI_COLOR_RED     "\x1b[31m"
 #define ANSI_COLOR_GREEN   "\x1b[32m"
 #define ANSI_COLOR_RESET   "\x1b[0m"
 
-cunn::Sequential::Ptr
-loadNetwork(THCState* state, const char* filename);
 
-
-
+/*
 void printTensorSize(THCState *state, THCudaTensor *tensor)
 {
   long ndim = THCudaTensor_nDimension(state, tensor);
@@ -32,7 +35,7 @@ void printTensor(THCState* state, THCudaTensor *t)
 
   THFloatTensor_free(ft);
 }
-
+*/
 
 
 int main(int argc, char** argv)
