@@ -16,6 +16,7 @@ INCLUDE_DIRECTORIES(
 )
 
 CUDA_ADD_EXECUTABLE(test_networks test.cpp loader.cpp)
+CUDA_ADD_LIBRARY(wrapper STATIC wrapper.cpp loader.cpp)
 
 LINK_DIRECTORIES("${Torch_INSTALL_LIB}")
 TARGET_LINK_LIBRARIES(test_networks
