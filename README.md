@@ -37,27 +37,36 @@ The code was tested to work in Linux (Ubuntu 14.04) and OS X 10.10, although we 
 
 ### Models
 
-We provide the models in 3 formats, two are Torch7 "nn" and "cudnn" formats and one is binary format with weights only.
+We provide the models in 3 formats, two are Torch7 "nn" and "cudnn" formats and one is binary format with weights only. The table from the paper is here for convenience.
+
+| Train set | Test set | 2ch | 2ch2stream | 2chdeep | siam | siam2stream |
+| --- |  --- | :---: |  :---: |  :---: |  :---: |  :---: |
+| yosemite | notredame | 2.74 | **2.11** | 2.43 | 5.62 | 5.23 |
+| yosemite | liberty | 8.59 | **7.2** | 7.4 | 13.48 | 11.34 |
+| notredame | yosemite | 6.04 | **4.09** | 4.38 | 13.23 | 10.44 |
+| notredame | liberty | 6.04 | 4.85 | **4.56** | 8.77 | 6.45 |
+| liberty | yosemite | 7 | **5** | 6.18 | 14.76 | 9.39 |
+| liberty | notredame | 2.76 | **1.9** | 2.77 | 4.04 | 2.82 |
 
 #### nn format
 
 Models in nn format can be loaded and used without CUDA support in Torch. To enable CUDA support ```model:cuda()``` call required.
 
 | Train Set | 2ch | 2ch2stream | 2chdeep | siam | siam2stream |
-| --- |  --- |  --- |  --- |  --- |  --- |
-| yosemite | [nn (3.49 MB)](https://dl.dropboxusercontent.com/u/44617616/networks/2ch/2ch_yosemite_nn.t7) | [nn (9.74 MB)](https://dl.dropboxusercontent.com/u/44617616/networks/2ch2stream/2ch2stream_yosemite_nn.t7) | [nn (4.15 MB)](https://dl.dropboxusercontent.com/u/44617616/networks/2chdeep/2chdeep_yosemite_nn.t7) | [nn (7.95 MB)](https://dl.dropboxusercontent.com/u/44617616/networks/siam/siam_yosemite_nn.t7) | [nn (22.36 MB)](https://dl.dropboxusercontent.com/u/44617616/networks/siam2stream/siam2stream_yosemite_nn.t7) |
-| notredame | [nn (3.49 MB)](https://dl.dropboxusercontent.com/u/44617616/networks/2ch/2ch_notredame_nn.t7) | [nn (9.74 MB)](https://dl.dropboxusercontent.com/u/44617616/networks/2ch2stream/2ch2stream_notredame_nn.t7) | [nn (4.15 MB)](https://dl.dropboxusercontent.com/u/44617616/networks/2chdeep/2chdeep_notredame_nn.t7) | [nn (7.95 MB)](https://dl.dropboxusercontent.com/u/44617616/networks/siam/siam_notredame_nn.t7) | [nn (22.36 MB)](https://dl.dropboxusercontent.com/u/44617616/networks/siam2stream/siam2stream_notredame_nn.t7) |
-| liberty | [nn (3.49 MB)](https://dl.dropboxusercontent.com/u/44617616/networks/2ch/2ch_liberty_nn.t7) | [nn (9.74 MB)](https://dl.dropboxusercontent.com/u/44617616/networks/2ch2stream/2ch2stream_liberty_nn.t7) | [nn (4.15 MB)](https://dl.dropboxusercontent.com/u/44617616/networks/2chdeep/2chdeep_liberty_nn.t7) | [nn (7.95 MB)](https://dl.dropboxusercontent.com/u/44617616/networks/siam/siam_liberty_nn.t7) | [nn (22.36 MB)](https://dl.dropboxusercontent.com/u/44617616/networks/siam2stream/siam2stream_liberty_nn.t7) |
+| --- |  :---: |  :---: |  :---: |  :---: |  :---: |
+| yosemite | [3.49 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2ch/2ch_yosemite_nn.t7) | [9.74 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2ch2stream/2ch2stream_yosemite_nn.t7) | [4.15 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2chdeep/2chdeep_yosemite_nn.t7) | [7.95 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam/siam_yosemite_nn.t7) | [22.36 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam2stream/siam2stream_yosemite_nn.t7) |
+| notredame | [3.49 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2ch/2ch_notredame_nn.t7) | [9.74 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2ch2stream/2ch2stream_notredame_nn.t7) | [4.15 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2chdeep/2chdeep_notredame_nn.t7) | [7.95 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam/siam_notredame_nn.t7) | [22.36 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam2stream/siam2stream_notredame_nn.t7) |
+| liberty | [3.49 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2ch/2ch_liberty_nn.t7) | [9.74 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2ch2stream/2ch2stream_liberty_nn.t7) | [4.15 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2chdeep/2chdeep_liberty_nn.t7) | [7.95 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam/siam_liberty_nn.t7) | [22.36 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam2stream/siam2stream_liberty_nn.t7) |
 
 #### cudnn format
 
 Model in cudnn format are faster, but need a special library from NVIDIA. Check https://github.com/soumith/cudnn.torch 
 
 | Train Set | 2ch | 2ch2stream | 2chdeep | siam | siam2stream |
-| --- |  --- |  --- |  --- |  --- |  --- |
-| yosemite | [cudnn (3.75 MB)](https://dl.dropboxusercontent.com/u/44617616/networks/2ch/2ch_yosemite_cudnn.t7) | [cudnn (9.85 MB)](https://dl.dropboxusercontent.com/u/44617616/networks/2ch2stream/2ch2stream_yosemite_cudnn.t7) | [cudnn (4.15 MB)](https://dl.dropboxusercontent.com/u/44617616/networks/2chdeep/2chdeep_yosemite_cudnn.t7) | [cudnn (5.62 MB)](https://dl.dropboxusercontent.com/u/44617616/networks/siam/siam_yosemite_cudnn.t7) | [cudnn (17.46 MB)](https://dl.dropboxusercontent.com/u/44617616/networks/siam2stream/siam2stream_yosemite_cudnn.t7) |
-| notredame | [cudnn (3.75 MB)](https://dl.dropboxusercontent.com/u/44617616/networks/2ch/2ch_notredame_cudnn.t7) | [cudnn (9.85 MB)](https://dl.dropboxusercontent.com/u/44617616/networks/2ch2stream/2ch2stream_notredame_cudnn.t7) | [cudnn (4.15 MB)](https://dl.dropboxusercontent.com/u/44617616/networks/2chdeep/2chdeep_notredame_cudnn.t7) | [cudnn (5.62 MB)](https://dl.dropboxusercontent.com/u/44617616/networks/siam/siam_notredame_cudnn.t7) | [cudnn (17.71 MB)](https://dl.dropboxusercontent.com/u/44617616/networks/siam2stream/siam2stream_notredame_cudnn.t7) |
-| liberty | [cudnn (3.75 MB)](https://dl.dropboxusercontent.com/u/44617616/networks/2ch/2ch_liberty_cudnn.t7) | [cudnn (9.85 MB)](https://dl.dropboxusercontent.com/u/44617616/networks/2ch2stream/2ch2stream_liberty_cudnn.t7) | [cudnn (4.15 MB)](https://dl.dropboxusercontent.com/u/44617616/networks/2chdeep/2chdeep_liberty_cudnn.t7) | [cudnn (5.62 MB)](https://dl.dropboxusercontent.com/u/44617616/networks/siam/siam_liberty_cudnn.t7) | [cudnn (17.71 MB)](https://dl.dropboxusercontent.com/u/44617616/networks/siam2stream/siam2stream_liberty_cudnn.t7) |
+| --- |  :---: |  :---: |  :---: |  :---: |  :---: |
+| yosemite | [3.75 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2ch/2ch_yosemite_cudnn.t7) | [9.85 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2ch2stream/2ch2stream_yosemite_cudnn.t7) | [4.15 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2chdeep/2chdeep_yosemite_cudnn.t7) | [5.62 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam/siam_yosemite_cudnn.t7) | [17.46 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam2stream/siam2stream_yosemite_cudnn.t7) |
+| notredame | [3.75 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2ch/2ch_notredame_cudnn.t7) | [9.85 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2ch2stream/2ch2stream_notredame_cudnn.t7) | [4.15 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2chdeep/2chdeep_notredame_cudnn.t7) | [5.62 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam/siam_notredame_cudnn.t7) | [17.71 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam2stream/siam2stream_notredame_cudnn.t7) |
+| liberty | [3.75 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2ch/2ch_liberty_cudnn.t7) | [9.85 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2ch2stream/2ch2stream_liberty_cudnn.t7) | [4.15 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2chdeep/2chdeep_liberty_cudnn.t7) | [5.62 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam/siam_liberty_cudnn.t7) | [17.71 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam2stream/siam2stream_liberty_cudnn.t7) |
 
 #### binary format
 
