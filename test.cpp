@@ -14,30 +14,6 @@
 #define ANSI_COLOR_RESET   "\x1b[0m"
 
 
-/*
-void printTensorSize(THCState *state, THCudaTensor *tensor)
-{
-  long ndim = THCudaTensor_nDimension(state, tensor);
-  for(long i = 0; i<ndim; ++i)
-    std::cout << tensor->size[i] << " ";
-  std::cout << std::endl;
-}
-
-void printTensor(THCState* state, THCudaTensor *t)
-{
-  THFloatTensor *ft = THFloatTensor_newWithSize1d(THCudaTensor_nElement(state, t));
-  THFloatTensor_copyCuda(state, ft, t);
-
-  float* data = THFloatTensor_data(ft);
-  for (long i=0; i<THFloatTensor_nElement(ft); ++i)
-    std::cout << data[i] << " ";
-  std::cout << std::endl;
-
-  THFloatTensor_free(ft);
-}
-*/
-
-
 int main(int argc, char** argv)
 {
   THCState *state = (THCState*)malloc(sizeof(THCState));
