@@ -15,9 +15,9 @@ INCLUDE_DIRECTORIES(
   cunnproduction
 )
 
-CUDA_ADD_EXECUTABLE(test test.cpp loader.cpp)
+CUDA_ADD_EXECUTABLE(test_networks test.cpp loader.cpp)
 
 LINK_DIRECTORIES("${Torch_INSTALL_LIB}")
-TARGET_LINK_LIBRARIES(test
+TARGET_LINK_LIBRARIES(test_networks
   cunnproduction
   TH THC)
