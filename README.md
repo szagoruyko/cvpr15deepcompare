@@ -29,7 +29,7 @@ Please cite the paper below if you use this code in your research.
 
 Sergey Zagoruyko, Nikos Komodakis
 "Learning to Compare Image Patches via Convolutional Neural Networks",
-ArXiv:1504.03641. http://arxiv.org/abs/1504.03641
+ArXiv:1504.03641. http://www.cv-foundation.org/openaccess/content_cvpr_2015/papers/Zagoruyko_Learning_to_Compare_2015_CVPR_paper.pdf
 
 Installation
 -----
