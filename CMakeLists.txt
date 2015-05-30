@@ -17,10 +17,9 @@ INCLUDE_DIRECTORIES(
 
 set(CUDA_NVCC_FLAGS ${CUDA_NVCC_FLAGS} "-Xcompiler -fPIC")
 
-CUDA_ADD_EXECUTABLE(test_networks test.cpp loader.cpp)
-CUDA_ADD_LIBRARY(wrapper SHARED wrapper.cpp loader.cpp)
+CUDA_ADD_EXECUTABLE(test_networks src/test.cu src/loader.cu)
+CUDA_ADD_LIBRARY(wrapper SHARED src/wrapper.cu src/loader.cu)
 
 LINK_DIRECTORIES("${Torch_INSTALL_LIB}")
-TARGET_LINK_LIBRARIES(test_networks
-  cunnproduction
-  TH THC)
+TARGET_LINK_LIBRARIES(test_networks cunnproduction TH THC)
+TARGET_LINK_LIBRARIES(wrapper cunnproduction TH THC)
