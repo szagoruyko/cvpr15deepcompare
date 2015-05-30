@@ -1,0 +1,3 @@
+[submodule "cunnproduction"]
+	path = cunnproduction
+	url = https://github.com/szagoruyko/cunnproduction
