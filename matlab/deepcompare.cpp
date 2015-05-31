@@ -27,6 +27,7 @@ static void init(MEX_ARGS)
   char* param_file = mxArrayToString(prhs[0]);
 
   net_.reset(new Network(param_file));
+  mexPrintf(net_->tostring().c_str());
 
   mxFree(param_file);
 }
@@ -40,7 +41,7 @@ static void set_device(MEX_ARGS)
   }
 
   int device_id = static_cast<int>(mxGetScalar(prhs[0]));
-  handle->setDevice(device_id);
+  net_->setDevice(device_id);
 }
 
 static void forward(MEX_ARGS)
@@ -51,7 +52,52 @@ static void forward(MEX_ARGS)
     mex_error(error_msg.str());
   }
 
-  //plhs[0] = do_forward(prhs[0]);
+  const mxArray *input_array = prhs[0];
+  if(!mxIsSingle(input_array))
+    mex_error("Expected single array");
+
+  const mwSize ndim = mxGetNumberOfDimensions(input_array);
+  THLongStorage *input_sizes = THLongStorage_newWithSize(ndim);
+
+  // have to invert the dimensions because torch is row-major
+  // and matlab is col-major
+  {
+    const mwSize* size = mxGetDimensions(input_array);
+    long *input_sizes_data = THLongStorage_data(input_sizes);
+    for(mwSize i=0; i<ndim; ++i)
+      input_sizes_data[ndim - i - 1] = size[i];
+  }
+
+  THFloatTensor *input = THFloatTensor_newWithSize(input_sizes, NULL);
+
+  memcpy(THFloatTensor_data(input),
+      mxGetData(input_array),
+      THFloatTensor_nElement(input) * sizeof(float));
+
+  THFloatTensor *output = THFloatTensor_new();
+  net_->forward(input, output);
+
+  mwSize dims[4];
+  const long noutput_dim = THFloatTensor_nDimension(output);
+  for(long i=0; i < noutput_dim; ++i)
+    dims[noutput_dim - i - 1] = output->size[i];
+  mxArray* output_array = mxCreateNumericArray(2, dims, mxSINGLE_CLASS, mxREAL);
+
+  memcpy(mxGetData(output_array),
+      THFloatTensor_data(output),
+      THFloatTensor_nElement(output) * sizeof(float));
+
+  plhs[0] = output_array;
+
+  THFloatTensor_free(input);
+  THFloatTensor_free(output);
+}
+
+static void print(MEX_ARGS)
+{
+  if(net_) {
+    mexPrintf(net_->tostring().c_str());
+  }
 }
 
 static void reset(MEX_ARGS)
@@ -72,6 +118,7 @@ static handler_registry handlers[] = {
   { "init",               init            },
   { "set_device",         set_device      },
   { "reset",              reset           },
+  { "print",              print           },
   { "END",                NULL            },
 };
 
@@ -101,7 +148,4 @@ void mexFunction(MEX_ARGS) {
     }
     mxFree(cmd);
   }
-  //handle = init("../networks/2ch/2ch_liberty.bin");
-  //mexPrintf(tostring(handle).c_str());
-  //reset(handle);
 }

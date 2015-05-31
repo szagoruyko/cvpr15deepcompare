@@ -9,8 +9,10 @@ struct Impl {
 Network::Network(const char* filename) {
   THCState *state = (THCState*)malloc(sizeof(THCState));
   THCudaInit(state);
+
   ptr = std::make_shared<Impl>();
   ptr->state = state;
+  init(filename);
 }
 
 Network::~Network() {
