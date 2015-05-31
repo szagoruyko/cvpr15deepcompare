@@ -97,6 +97,12 @@ int main(int argc, char** argv)
   cv::Mat ima = cv::imread("../100_7100.JPG");
   cv::Mat imb = cv::imread("../100_7101.JPG");
 
+  if(ima.empty() || imb.empty())
+  {
+    std::cout << "images not found\n";
+    return 1;
+  }
+
   cv::Mat ima_gray, imb_gray;
   cv::cvtColor(ima, ima_gray, cv::COLOR_BGR2GRAY);
   cv::cvtColor(imb, imb_gray, cv::COLOR_BGR2GRAY);
