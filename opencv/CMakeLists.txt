@@ -11,13 +11,14 @@ set(CUDA_NVCC_FLAGS -std=c++11)
 INCLUDE_DIRECTORIES(
   "${Torch_INSTALL_INCLUDE}/THC"
   ${OpenCV_INCLUDE_DIRS}
-  /opt/rocks/cunn-release/
+  ${CMAKE_SOURCE_DIR}/../src
+  ${CMAKE_SOURCE_DIR}/../cunnproduction
 )
 
-CUDA_ADD_EXECUTABLE(example example.cu ../loader.cpp)
+CUDA_ADD_EXECUTABLE(example example.cu ../src/loader.cu)
 
 LINK_DIRECTORIES("${Torch_INSTALL_LIB}")
 TARGET_LINK_LIBRARIES(example
-  /opt/rocks/cunn-release/build/libcunnproduction.so
+  cunnproduction
   TH THC
   opencv_core opencv_highgui opencv_imgproc opencv_imgcodecs opencv_features2d)
