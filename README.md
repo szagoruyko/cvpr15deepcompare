@@ -27,9 +27,18 @@ Created by Sergey Zagoruyko and Nikos Komodakis. http://imagine.enpc.fr/~komodak
 
 Please cite the paper below if you use this code in your research.
 
-Sergey Zagoruyko, Nikos Komodakis
-"Learning to Compare Image Patches via Convolutional Neural Networks",
-ArXiv:1504.03641. http://www.cv-foundation.org/openaccess/content_cvpr_2015/papers/Zagoruyko_Learning_to_Compare_2015_CVPR_paper.pdf
+Sergey Zagoruyko, Nikos Komodakis, 
+"Learning to Compare Image Patches via Convolutional Neural Networks". http://www.cv-foundation.org/openaccess/content_cvpr_2015/papers/Zagoruyko_Learning_to_Compare_2015_CVPR_paper.pdf, bib:
+
+```
+@InProceedings{Zagoruyko_2015_CVPR,
+	author = {Zagoruyko, Sergey and Komodakis, Nikos},
+	title = {Learning to Compare Image Patches via Convolutional Neural Networks},
+	booktitle = {The IEEE Conference on Computer Vision and Pattern Recognition (CVPR)},
+	month = {June},
+	year = {2015}
+}
+```
 
 Installation
 -----
@@ -38,6 +47,8 @@ The code was tested to work in Linux (Ubuntu 14.04) and OS X 10.10, although we 
 ### Models
 
 We provide the models in 3 formats, two are Torch7 "nn" and "cudnn" formats and one is binary format with weights only. The table from the paper is here for convenience.
+
+**All models expect input patches to be in [0;1] range before mean subtraction.**
 
 | Train set | Test set | 2ch | 2ch2stream | 2chdeep | siam | siam2stream |
 | --- |  --- | :---: |  :---: |  :---: |  :---: |  :---: |
@@ -82,9 +93,9 @@ Models in cudnn format are faster, but need a special library from NVIDIA. Check
 | notredame | [3.48 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2ch/2ch_notredame.bin) | [8.98 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2ch2stream/2ch2stream_notredame.bin) | [4.13 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2chdeep/2chdeep_notredame.bin) | [4.47 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam/siam_notredame.bin) | [13.17 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam2stream/siam2stream_notredame.bin) |
 | liberty | [3.48 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2ch/2ch_liberty.bin) | [8.98 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2ch2stream/2ch2stream_liberty.bin) | [4.13 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2chdeep/2chdeep_liberty.bin) | [4.47 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam/siam_liberty.bin) | [13.17 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam2stream/siam2stream_liberty.bin) |
 
-### C++ code
+### C++ API
 
-We release CUDA code for the time being, CPU code might be added in the future. To install it you need to have CUDA 7.0 with the up-to-date CUDA driver.
+We release CUDA code for now, CPU code might be added in the future. To install it you need to have CUDA 7.0 with the up-to-date CUDA driver.
 Clone and compile this repository it with:
 
 ```
@@ -94,6 +105,22 @@ mkdir build; cd build;
 cmake .. -DCMAKE_INSTALL_PREFIX=../install
 make -j4 install
 ```
+
+Then you will have ```loadNetwork``` function defined in src/loader.h, which expects the state and the path to a network in binary format on input. A simple example:
+
+```c++
+THCState *state = (THCState*)malloc(sizeof(THCState));
+THCudaInit(state);
+
+cunn::Sequential::Ptr net = loadNetwork(state, "networks/siam/siam_notredame.bin");
+
+THCudaTensor *input = THCudaTensor_newWithSize4d(state, 128, 2, 64, 64);
+THCudaTensor *output = net->forward(input);
+
+THCudaShutdown(state);
+```
+
+Again, **all binary models expect input patches to be in [0;1] range before mean subtraction.**
 
 ### MATLAB
 
