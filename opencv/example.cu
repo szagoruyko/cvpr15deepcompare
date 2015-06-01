@@ -58,30 +58,42 @@ void extractDescriptors(THCState *state,
     const std::vector<cv::Mat>& patches,
     cv::Mat& descriptors)
 {
+  size_t batch_size = 256;
   size_t N = patches.size();
-  THFloatTensor *buffer = THFloatTensor_newWithSize4d(N, 1, M, M);
-  float *data = THFloatTensor_data(buffer);
 
-  for(size_t i = 0; i < N; ++i)
-    memcpy(data + i*M*M, patches[i].data, sizeof(float) * M * M);
+  THFloatTensor *buffer = THFloatTensor_newWithSize4d(batch_size, 1, M, M);
+  THCudaTensor *input = THCudaTensor_newWithSize4d(state, batch_size, 1, M, M);
 
-  // initialize 4D CUDA tensor and copy patches into it
-  THCudaTensor *input = THCudaTensor_newWithSize4d(state, N, 1, M, M);
-  THCudaTensor_copyFloat(state, input, buffer);
+  for(int j=0; j < ceil((float)N/batch_size); ++j)
+  {
+    float *data = THFloatTensor_data(buffer);
+    size_t k = 0;
+    for(size_t i = j*batch_size; i < std::min((j+1)*batch_size, N); ++i, ++k)
+      memcpy(data + k*M*M, patches[i].data, sizeof(float) * M * M);
 
-  // propagate through the network
-  THCudaTensor *output = net->forward(input);
+    // initialize 4D CUDA tensor and copy patches into it
+    THCudaTensor_copyFloat(state, input, buffer);
 
-  // copy descriptors back
-  THFloatTensor *desc = THFloatTensor_newWithSize2d(N, output->size[1]);
-  THFloatTensor_copyCuda(state, desc, output);
+    // propagate through the network
+    THCudaTensor *output = net->forward(input);
 
-  descriptors.create(N, output->size[1], CV_32F);
-  memcpy(descriptors.data, THFloatTensor_data(desc), sizeof(float) * N * output->size[1]);
+    // copy descriptors back
+    THFloatTensor *desc = THFloatTensor_newWithSize2d(output->size[0], output->size[1]);
+    THFloatTensor_copyCuda(state, desc, output);
+
+    size_t feature_dim = output->size[1];
+    if(descriptors.cols != feature_dim || descriptors.rows != N)
+      descriptors.create(N, feature_dim, CV_32F);
+
+    memcpy(descriptors.data + j * feature_dim * batch_size * sizeof(float),
+        THFloatTensor_data(desc),
+        sizeof(float) * feature_dim * k);
+
+    THFloatTensor_free(desc);
+  }
 
   THCudaTensor_free(state, input);
   THFloatTensor_free(buffer);
-  THFloatTensor_free(desc);
 }
 
 
@@ -90,7 +102,7 @@ int main(int argc, char** argv)
   THCState *state = (THCState*)malloc(sizeof(THCState));
   THCudaInit(state);
 
-  const char *network_path = "/opt/projects/deepfeat/release/networks/siam/siam_desc_notredame.bin";
+  const char *network_path = "../networks/siam2stream/siam2stream_desc_notredame.bin";
   auto net = loadNetwork(state, network_path);
 
   // load the images
@@ -110,7 +122,7 @@ int main(int argc, char** argv)
   // Here we set min_area parameter to a bigger value, like that minimal size
   // of a patch will be around 11x11, because the network was trained on bigger patches
   // this parameter is important in practice
-  cv::Ptr<cv::MSER> detector = cv::MSER::create(5, 120);
+  cv::Ptr<cv::MSER> detector = cv::MSER::create(5, 620);
   std::vector<cv::KeyPoint> kpa, kpb;
   detector->detect(ima_gray, kpa);
   detector->detect(imb_gray, kpb);
@@ -149,6 +161,11 @@ int main(int argc, char** argv)
   }
 
   //-- Draw only "good" matches
+  float f = 0.25;
+  cv::resize(ima, ima, cv::Size(), f, f);
+  cv::resize(imb, imb, cv::Size(), f, f);
+  for(auto &it: kpa) { it.pt *= f; it.size *= f; }
+  for(auto &it: kpb) { it.pt *= f; it.size *= f; }
   cv::Mat img_matches;
   cv::drawMatches( ima, kpa, imb, kpb,
                good_matches, img_matches, cv::Scalar::all(-1), cv::Scalar::all(-1),
@@ -160,8 +177,8 @@ int main(int argc, char** argv)
     cv::circle(imb, cv::Point(it.pt.x, it.pt.y), it.size, cv::Scalar(255,255,0));
 
   cv::imshow("matches", img_matches);
-  cv::imshow("keypoints image 1", ima);
-  cv::imshow("keypoints image 2", imb);
+  //cv::imshow("keypoints image 1", ima);
+  //cv::imshow("keypoints image 2", imb);
   cv::waitKey();
   THCudaShutdown(state);
 
