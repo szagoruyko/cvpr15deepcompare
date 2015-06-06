@@ -16,9 +16,9 @@ INCLUDE_DIRECTORIES(
 
 LINK_DIRECTORIES("${Torch_INSTALL_LIB}")
 CUDA_ADD_LIBRARY(loader_static STATIC src/loader.cu)
+CUDA_ADD_LIBRARY(wrapper_static STATIC src/wrapper.cu)
 
 CUDA_ADD_EXECUTABLE(test_networks src/test.cu)
-CUDA_ADD_LIBRARY(wrapper SHARED src/wrapper.cu)
 
 IF(WITH_OPENCV)
   ADD_SUBDIRECTORY(opencv)
@@ -28,5 +28,4 @@ ENDIF()
 #  ADD_SUBDIRECTORY(matlab)
 #ENDIF()
 
-TARGET_LINK_LIBRARIES(test_networks cunnproduction TH THC loader_static)
-TARGET_LINK_LIBRARIES(wrapper cunnproduction TH THC loader_static)
+TARGET_LINK_LIBRARIES(test_networks cunnproduction_static TH THC loader_static)

@@ -41,7 +41,7 @@ static void set_device(MEX_ARGS)
   }
 
   int device_id = static_cast<int>(mxGetScalar(prhs[0]));
-  net_->setDevice(device_id);
+  net_->setDevice(device_id - 1);
 }
 
 static void forward(MEX_ARGS)
@@ -57,15 +57,35 @@ static void forward(MEX_ARGS)
     mex_error("Expected single array");
 
   const mwSize ndim = mxGetNumberOfDimensions(input_array);
-  THLongStorage *input_sizes = THLongStorage_newWithSize(ndim);
+
+  if(ndim > 4)
+    mex_error("2D, 3D or 4D array expected");
+
+  // it is impossible to have a N1xN2xN3x1 array in Matlab!
+  // but cunnproduction only expects 2d or 4d tensors
+  // so have to do this:
+  // 2d: N x B			->	B x N
+  // 3d: 64 x 64 x N		->	1 x N x 64 x 64
+  // 4d: 64 x 64 x N x B	->	B x N x 64 x 64
+
+  mwSize tndim = ndim == 3 ? tndim : ndim;
+
+  THLongStorage *input_sizes = THLongStorage_newWithSize(tndim);
 
   // have to invert the dimensions because torch is row-major
   // and matlab is col-major
   {
     const mwSize* size = mxGetDimensions(input_array);
     long *input_sizes_data = THLongStorage_data(input_sizes);
-    for(mwSize i=0; i<ndim; ++i)
-      input_sizes_data[ndim - i - 1] = size[i];
+    if(ndim ==3)  {
+      input_sizes_data[0] = 1;
+      for(mwSize i=0; i<ndim; ++i)
+	input_sizes_data[ndim - i] = size[i];
+    }
+    else {
+      for(mwSize i=0; i<ndim; ++i)
+	input_sizes_data[ndim - i - 1] = size[i];
+    }
   }
 
   THFloatTensor *input = THFloatTensor_newWithSize(input_sizes, NULL);
@@ -81,7 +101,7 @@ static void forward(MEX_ARGS)
   const long noutput_dim = THFloatTensor_nDimension(output);
   for(long i=0; i < noutput_dim; ++i)
     dims[noutput_dim - i - 1] = output->size[i];
-  mxArray* output_array = mxCreateNumericArray(2, dims, mxSINGLE_CLASS, mxREAL);
+  mxArray* output_array = mxCreateNumericArray(noutput_dim, dims, mxSINGLE_CLASS, mxREAL);
 
   memcpy(mxGetData(output_array),
       THFloatTensor_data(output),
@@ -102,7 +122,7 @@ static void print(MEX_ARGS)
 
 static void reset(MEX_ARGS)
 {
-  if (net_) {
+  if(net_) {
     net_.reset();
   }
 }
