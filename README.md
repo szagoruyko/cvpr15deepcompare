@@ -2,7 +2,7 @@ Code for CVPR15 paper "Learning to Compare Image Patches via Convolutional Neura
 -----
 This package allows researches to apply the described networks to match image patches and extract corresponding patches.
 
-We tried to make the code as easy to use as possible. The original models were trained with Torch ( http://torch.ch ) and we release the models in Torch7 format, and in addition to that we have C++ bindings which do not require Torch installation. Thus we provide example code how to use the models in MATLAB and with OpenCV http://opencv.org
+We tried to make the code as easy to use as possible. The original models were trained with Torch ( http://torch.ch ) and we release them in Torch7 and binary formats with C++ bindings which do not require Torch installation. Thus we provide example code how to use the models in Torch, MATLAB and with OpenCV http://opencv.org
 
 CREDITS, LICENSE, CITATION
 -----
@@ -19,9 +19,7 @@ in all internal copies and modifications;
 4) no rights to assign this license are granted.   
 
 Please Contact Prof. Nikos Komodakis,
-6 Avenue Blaise Pascal - Cite Descartes, Champs-sur-Marne, 77455 Marne-la-Vallee cedex 2, France, Office B003
-Tel : +33164152173, Fax: +33164152186
-for commercial licensing opportunities, or for further distribution, modification or license rights.
+6 Avenue Blaise Pascal - Cite Descartes, Champs-sur-Marne, 77455 Marne-la-Vallee cedex 2, France for commercial licensing opportunities, or for further distribution, modification or license rights.
 
 Created by Sergey Zagoruyko and Nikos Komodakis. http://imagine.enpc.fr/~komodakn/
 
@@ -39,10 +37,6 @@ Sergey Zagoruyko, Nikos Komodakis,
 	year = {2015}
 }
 ```
-
-Installation
------
-The code was tested to work in Linux (Ubuntu 14.04) and OS X 10.10, although we release all the source code to enable usage in other operating systems.
 
 ### Models
 
@@ -120,6 +114,8 @@ In fact, nn and cudnn are not the only backends for Torch, for a big number of p
 
 ### C++ API
 
+The code was tested to work in Linux (Ubuntu 14.04) and OS X 10.10, although we release all the source code to enable usage in other operating systems.
+
 We release CUDA code for now, CPU code might be added in the future. To install it you need to have CUDA 7.0 with the up-to-date CUDA driver.
 Clone and compile this repository it with:
 
@@ -169,11 +165,12 @@ deepcompare('forward', A)
 ```
 ```A``` can be 2D, 3D or 4D array, which is converted inside to 2D or 4D array (Matlab is col-major and Torch is row-major so the array is transposed):
 
-```
-2d: N x B			->	B x N
-3d: 64 x 64 x N		->	1 x N x 64 x 64
-4d: 64 x 64 x N x B	->	B x N x 64 x 64
-```
+| #dim | matlab dim | torch dim |
+| -- | -- | -- |
+| 2d | N x B | B x N |
+| 3d | 64 x 64 x N | 1 x N x 64 x 64 |
+| 4d | 64 x 64 x N x B | B x N x 64 x 64 |
+
 2D or 4D tensor is returned. In case of full network propagation for example the output will be 2D: 1 x B, if input was B x 2 x 64 x 64.
 
 To set the number of GPU to be used (the numbering starts from 1):
@@ -196,7 +193,7 @@ Depends on OpenCV 3.0. To build the example do
 
 ```
 cd build;
-cmake -DWITH_OPENCV=ON -DOpenCV_DIR=/opt/caffe .; make -j8
+cmake -DWITH_OPENCV=ON -DOpenCV_DIR=/opt/opencv .; make -j8
 ```
-Here ```/opt/caffe``` has to be a folder where OpenCV is built or. If you have it installed, you don't need to add it, ```-DWITH_OPENCV=ON``` will be enough.
+Here ```/opt/opencv``` has to be a folder where OpenCV is built. If you have it installed, you don't need to add it, ```-DWITH_OPENCV=ON``` will be enough.
 
