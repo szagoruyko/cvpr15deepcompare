@@ -9,9 +9,10 @@ INCLUDE_DIRECTORIES(
   ${CMAKE_SOURCE_DIR}/cunnproduction
 )
 
-CUDA_ADD_EXECUTABLE(example example.cu ../src/loader.cu)
+CUDA_ADD_EXECUTABLE(example example.cu)
 
-TARGET_LINK_LIBRARIES(example
+TARGET_LINK_LIBRARIES(example loader_static
   cunnproduction
   TH THC
-  opencv_core opencv_highgui opencv_imgproc opencv_imgcodecs opencv_features2d)
+  opencv_core opencv_highgui opencv_imgproc opencv_imgcodecs opencv_features2d
+)
