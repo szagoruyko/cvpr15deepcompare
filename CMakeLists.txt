@@ -6,20 +6,22 @@ ADD_SUBDIRECTORY(cunnproduction)
 FIND_PACKAGE(CUDA 7.0 REQUIRED)
 FIND_PACKAGE(Torch REQUIRED)
 
-add_definitions(-std=c++11)
-set(CUDA_NVCC_FLAGS -std=c++11)
+SET(CUDA_NVCC_FLAGS ${CUDA_NVCC_FLAGS} "-Xcompiler -fPIC -std=c++11")
 
 INCLUDE_DIRECTORIES(
-  "${Torch_INSTALL_INCLUDE}/THC"
-  ${OpenCV_INCLUDE_DIRS}
+  ${Torch_INSTALL_INCLUDE}/THC
+  ${Torch_INSTALL_INCLUDE}/TH
   cunnproduction
 )
 
-set(CUDA_NVCC_FLAGS ${CUDA_NVCC_FLAGS} "-Xcompiler -fPIC")
+LINK_DIRECTORIES("${Torch_INSTALL_LIB}")
 
 CUDA_ADD_EXECUTABLE(test_networks src/test.cu src/loader.cu)
 CUDA_ADD_LIBRARY(wrapper SHARED src/wrapper.cu src/loader.cu)
 
-LINK_DIRECTORIES("${Torch_INSTALL_LIB}")
+IF(WITH_OPENCV)
+  ADD_SUBDIRECTORY(opencv)
+ENDIF()
+
 TARGET_LINK_LIBRARIES(test_networks cunnproduction TH THC)
 TARGET_LINK_LIBRARIES(wrapper cunnproduction TH THC)
