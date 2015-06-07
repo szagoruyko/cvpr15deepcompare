@@ -147,6 +147,8 @@ After you build everything and download the networks run test with ```run_test.s
 
 ### MATLAB
 
+Building Matlab bindings requires a little bit of user intervention. Open matlab/make.m file in Matlab and put your paths to Matlab and include/lib paths of TH and THC, then run ```>> make```. Mex file will be created. 
+
 To initialize the interface do
 
 ```
