@@ -24,8 +24,6 @@ IF(WITH_OPENCV)
   ADD_SUBDIRECTORY(opencv)
 ENDIF()
 
-#IF(WITH_MATLAB)
-#  ADD_SUBDIRECTORY(matlab)
-#ENDIF()
-
 TARGET_LINK_LIBRARIES(test_networks cunnproduction_static TH THC loader_static)
+TARGET_LINK_LIBRARIES(loader_static TH THC cunnproduction_static)
+TARGET_LINK_LIBRARIES(wrapper_static TH THC cunnproduction_static loader_static)
