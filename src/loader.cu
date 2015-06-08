@@ -153,25 +153,25 @@ loadNetwork(THCState* state, const char* filename)
   }
   else if(net_type == "2chdeep")
   {
-    net->add(cunn::Module::Ptr(new cunn::SpatialConvolutionMM(state, 2,96, 4,4, 3,3)));
-    net->add(cunn::Module::Ptr(new cunn::ReLU(state)));
-    net->add(cunn::Module::Ptr(new cunn::SpatialConvolutionMM(state, 96,96, 3,3)));
-    net->add(cunn::Module::Ptr(new cunn::ReLU(state)));
-    net->add(cunn::Module::Ptr(new cunn::SpatialConvolutionMM(state, 96,96, 3,3)));
-    net->add(cunn::Module::Ptr(new cunn::ReLU(state)));
-    net->add(cunn::Module::Ptr(new cunn::SpatialConvolutionMM(state, 96,96, 3,3)));
-    net->add(cunn::Module::Ptr(new cunn::ReLU(state)));
+    net->add(std::make_shared<cunn::SpatialConvolutionMM>(state, 2,96, 4,4, 3,3));
+    net->add(std::make_shared<cunn::ReLU>(state));
+    net->add(std::make_shared<cunn::SpatialConvolutionMM>(state, 96,96, 3,3));
+    net->add(std::make_shared<cunn::ReLU>(state));
+    net->add(std::make_shared<cunn::SpatialConvolutionMM>(state, 96,96, 3,3));
+    net->add(std::make_shared<cunn::ReLU>(state));
+    net->add(std::make_shared<cunn::SpatialConvolutionMM>(state, 96,96, 3,3));
+    net->add(std::make_shared<cunn::ReLU>(state));
 
-    net->add(cunn::Module::Ptr(new cunn::SpatialMaxPooling(state, 2,2, 2,2, true)));
+    net->add(std::make_shared<cunn::SpatialMaxPooling>(state, 2,2, 2,2, true));
 
-    net->add(cunn::Module::Ptr(new cunn::SpatialConvolutionMM(state, 96,192, 3,3)));
-    net->add(cunn::Module::Ptr(new cunn::ReLU(state)));
-    net->add(cunn::Module::Ptr(new cunn::SpatialConvolutionMM(state, 192,192, 3,3)));
-    net->add(cunn::Module::Ptr(new cunn::ReLU(state)));
-    net->add(cunn::Module::Ptr(new cunn::SpatialConvolutionMM(state, 192,192, 3,3)));
-    net->add(cunn::Module::Ptr(new cunn::ReLU(state)));
+    net->add(std::make_shared<cunn::SpatialConvolutionMM>(state, 96,192, 3,3));
+    net->add(std::make_shared<cunn::ReLU>(state));
+    net->add(std::make_shared<cunn::SpatialConvolutionMM>(state, 192,192, 3,3));
+    net->add(std::make_shared<cunn::ReLU>(state));
+    net->add(std::make_shared<cunn::SpatialConvolutionMM>(state, 192,192, 3,3));
+    net->add(std::make_shared<cunn::ReLU>(state));
 
-    net->add(cunn::Module::Ptr(new cunn::Reshape(state, std::vector<size_t>(1,192*2*2))));
+    net->add(std::make_shared<cunn::Reshape>(state, std::vector<size_t>(1,192*2*2)));
     net->add(std::make_shared<cunn::Linear>(state, 192*2*2, 1));
 
     for(int i=0; i<8; ++i)
