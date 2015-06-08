@@ -328,6 +328,18 @@ loadNetwork(THCState* state, const char* filename)
     fread(&net_j, sizeof(int), 1, f);
     readParameters(state, (cunn::Linear*)net->get(3).get(), f);
   }
+  else if(net_type == "siam_decision")
+  {
+    net->add(std::make_shared<cunn::Linear>(state, 256*2, 256*2));
+    net->add(std::make_shared<cunn::ReLU>(state));
+    net->add(std::make_shared<cunn::Linear>(state, 256*2, 1));
+
+    int net_j = 0;
+    fread(&net_j, sizeof(int), 1, f);
+    readParameters(state, (cunn::Linear*)net->get(0).get(), f);
+    fread(&net_j, sizeof(int), 1, f);
+    readParameters(state, (cunn::Linear*)net->get(2).get(), f);
+  }
   else if(net_type == "siam2stream")
   {
     cunn::Parallel::Ptr branches = std::make_shared<cunn::Parallel>(state, 1,1);
@@ -370,6 +382,18 @@ loadNetwork(THCState* state, const char* filename)
     readParameters(state, (cunn::Linear*)net->get(1).get(), f);
     fread(&net_j, sizeof(int), 1, f);
     readParameters(state, (cunn::Linear*)net->get(3).get(), f);
+  }
+  else if(net_type == "siam2stream_decision")
+  {
+    net->add(std::make_shared<cunn::Linear>(state, 1024, 1024));
+    net->add(std::make_shared<cunn::ReLU>(state));
+    net->add(std::make_shared<cunn::Linear>(state, 1024, 1));
+
+    int net_j = 0;
+    fread(&net_j, sizeof(int), 1, f);
+    readParameters(state, (cunn::Linear*)net->get(0).get(), f);
+    fread(&net_j, sizeof(int), 1, f);
+    readParameters(state, (cunn::Linear*)net->get(2).get(), f);
   }
   else if(net_type == "siam2stream_desc")
   {
