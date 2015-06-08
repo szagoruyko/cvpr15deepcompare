@@ -116,7 +116,23 @@ In fact, nn and cudnn are not the only backends for Torch, for a big number of p
 
 The code was tested to work in Linux (Ubuntu 14.04) and OS X 10.10, although we release all the source code to enable usage in other operating systems.
 
-We release CUDA code for now, CPU code might be added in the future. To install it you need to have CUDA 7.0 with the up-to-date CUDA driver.
+We release CUDA code for now, CPU code might be added in the future. To install it you need to have CUDA 7.0 with the up-to-date CUDA driver (those are separate packages).
+
+Install TH and THC:
+
+```
+cd /tmp
+git clone https://github.com/torch/torch7.git
+cd torch7/lib/TH
+mkdir build; cd build
+cmake ..; make -j4 install
+cd /tmp
+git clone https://github.com/torch/cutorch.git;
+cd cutorch/lib/THC
+mkdir build; cd build
+cmake ..; make -j4 install
+```
+
 Clone and compile this repository it with:
 
 ```
@@ -185,6 +201,24 @@ Print the network structure:
 ```
 deepcompare('print')
 ```
+
+To enable splitting the computations of descriptor and decision parts in siamese networks we saved their binary parts.
+
+* siamese network:
+
+| Train Set | siam_desc | siam_decision |
+| --- | :---: |  :---: |
+| yosemite | [3.47 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam/siam_desc_yosemite.bin) | [1.00 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam/siam_decision_yosemite.bin) |
+| notredame | [3.47 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam/siam_desc_notredame.bin) | [1.00 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam/siam_decision_notredame.bin) |
+| liberty | [3.47 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam/siam_desc_liberty.bin) | [1.00 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam/siam_decision_liberty.bin) |
+
+* siam-2stream network:
+
+| Train Set | siam2stream_desc | siam2stream_decision |
+| --- |  :---: |  :---: |
+| yosemite | [9.16 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam2stream/siam2stream_desc_yosemite.bin) | [4.01 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam2stream/siam2stream_decision_yosemite.bin) |
+| notredame | [9.16 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam2stream/siam2stream_desc_notredame.bin) | [4.01 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam2stream/siam2stream_decision_notredame.bin) |
+| liberty | [9.16 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam2stream/siam2stream_desc_liberty.bin) | [4.01 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam2stream/siam2stream_decision_liberty.bin) |
 
 
 ### OpenCV
