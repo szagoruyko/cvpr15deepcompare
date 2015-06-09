@@ -58,7 +58,7 @@ void extractDescriptors(THCState *state,
     const std::vector<cv::Mat>& patches,
     cv::Mat& descriptors)
 {
-  size_t batch_size = 256;
+  size_t batch_size = 128;
   size_t N = patches.size();
 
   THFloatTensor *buffer = THFloatTensor_newWithSize4d(batch_size, 1, M, M);
@@ -102,12 +102,18 @@ int main(int argc, char** argv)
   THCState *state = (THCState*)malloc(sizeof(THCState));
   THCudaInit(state);
 
-  const char *network_path = "../networks/siam2stream/siam2stream_desc_notredame.bin";
+  if(argc < 3)
+  {
+    std::cout << "arguments: [network] [image1] [image2]\n";
+    return 1;
+  }
+
+  const char *network_path = argv[1];
   auto net = loadNetwork(state, network_path);
 
   // load the images
-  cv::Mat ima = cv::imread("../100_7100.JPG");
-  cv::Mat imb = cv::imread("../100_7101.JPG");
+  cv::Mat ima = cv::imread(argv[2]);
+  cv::Mat imb = cv::imread(argv[3]);
 
   if(ima.empty() || imb.empty())
   {
@@ -156,7 +162,7 @@ int main(int argc, char** argv)
 
   std::vector<cv::DMatch> good_matches;
   for( int i = 0; i < descriptors_a.rows; i++ )
-  { if( matches[i].distance <= max(4*min_dist, 0.02) )
+  { if( matches[i].distance <= std::max(4*min_dist, 0.02) )
     { good_matches.push_back( matches[i]); }
   }
 
