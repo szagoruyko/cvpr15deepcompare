@@ -9,7 +9,7 @@ INCLUDE_DIRECTORIES(
   ${CMAKE_SOURCE_DIR}/cunnproduction
 )
 
-CUDA_ADD_EXECUTABLE(example example.cu)
+ADD_EXECUTABLE(example example.cpp)
 
 TARGET_LINK_LIBRARIES(example loader_static
   cunnproduction
