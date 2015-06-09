@@ -116,7 +116,7 @@ In fact, nn and cudnn are not the only backends for Torch, for a big number of p
 
 The code was tested to work in Linux (Ubuntu 14.04) and OS X 10.10, although we release all the source code to enable usage in other operating systems.
 
-We release CUDA code for now, CPU code might be added in the future. To install it you need to have CUDA 7.0 with the up-to-date CUDA driver (those are separate packages).
+We release CUDA code for now, CPU code might be added in the future. To install it you need to have CUDA with the up-to-date CUDA driver (those are separate packages).
 
 Install TH and THC:
 
