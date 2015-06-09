@@ -233,3 +233,17 @@ cmake -DWITH_OPENCV=ON -DOpenCV_DIR=/opt/opencv .; make -j8
 ```
 Here ```/opt/opencv``` has to be a folder where OpenCV is built. If you have it installed, you don't need to add it, ```-DWITH_OPENCV=ON``` will be enough.
 
+To run the example download the images:
+
+```
+wget https://raw.githubusercontent.com/openMVG/ImageDataset_SceauxCastle/master/images/100_7100.JPG
+wget https://raw.githubusercontent.com/openMVG/ImageDataset_SceauxCastle/master/images/100_7101.JPG
+```
+
+and run it:
+
+```
+./build/opencv/example networks/siam2stream/siam2stream_desc_notredame.bin 100_7100.JPG 100_7101.JPG
+```
+
+You have to use descriptor matching network in this example. Check the example code for explanation.
