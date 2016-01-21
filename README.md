@@ -40,7 +40,7 @@ Sergey Zagoruyko, Nikos Komodakis,
 
 ### Models
 
-We provide the models in 3 formats, two are Torch7 "nn" and "cudnn" formats and one is binary format with weights only. The table from the paper is here for convenience.
+We provide the models in Torch7 and binary format. The table from the paper is here for convenience.
 
 **All models expect input patches to be in [0;1] range before mean subtraction.**
 
@@ -53,7 +53,7 @@ We provide the models in 3 formats, two are Torch7 "nn" and "cudnn" formats and 
 | liberty | yosemite | 7 | **5** | 6.18 | 14.76 | 9.39 |
 | liberty | notredame | 2.76 | **1.9** | 2.77 | 4.04 | 2.82 |
 
-To save time downloading models one by one run the script (downloads ~375MB):
+To save time downloading models one by one run the script (downloads ~300MB):
 
 ```
 ./download_pack.sh
@@ -65,19 +65,9 @@ Models in nn format can be loaded and used without CUDA support in Torch. To ena
 
 | Train Set | 2ch | 2ch2stream | 2chdeep | siam | siam2stream |
 | --- |  :---: |  :---: |  :---: |  :---: |  :---: |
-| yosemite | [3.49 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2ch/2ch_yosemite_nn.t7) | [9.74 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2ch2stream/2ch2stream_yosemite_nn.t7) | [4.15 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2chdeep/2chdeep_yosemite_nn.t7) | [7.95 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam/siam_yosemite_nn.t7) | [22.36 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam2stream/siam2stream_yosemite_nn.t7) |
-| notredame | [3.49 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2ch/2ch_notredame_nn.t7) | [9.74 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2ch2stream/2ch2stream_notredame_nn.t7) | [4.15 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2chdeep/2chdeep_notredame_nn.t7) | [7.95 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam/siam_notredame_nn.t7) | [22.36 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam2stream/siam2stream_notredame_nn.t7) |
-| liberty | [3.49 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2ch/2ch_liberty_nn.t7) | [9.74 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2ch2stream/2ch2stream_liberty_nn.t7) | [4.15 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2chdeep/2chdeep_liberty_nn.t7) | [7.95 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam/siam_liberty_nn.t7) | [22.36 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam2stream/siam2stream_liberty_nn.t7) |
-
-#### cudnn format
-
-Models in cudnn format are faster, but need a special library from NVIDIA. Check https://github.com/soumith/cudnn.torch 
-
-| Train Set | 2ch | 2ch2stream | 2chdeep | siam | siam2stream |
-| --- |  :---: |  :---: |  :---: |  :---: |  :---: |
-| yosemite | [3.75 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2ch/2ch_yosemite_cudnn.t7) | [9.85 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2ch2stream/2ch2stream_yosemite_cudnn.t7) | [4.15 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2chdeep/2chdeep_yosemite_cudnn.t7) | [5.62 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam/siam_yosemite_cudnn.t7) | [17.46 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam2stream/siam2stream_yosemite_cudnn.t7) |
-| notredame | [3.75 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2ch/2ch_notredame_cudnn.t7) | [9.85 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2ch2stream/2ch2stream_notredame_cudnn.t7) | [4.15 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2chdeep/2chdeep_notredame_cudnn.t7) | [5.62 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam/siam_notredame_cudnn.t7) | [17.71 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam2stream/siam2stream_notredame_cudnn.t7) |
-| liberty | [3.75 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2ch/2ch_liberty_cudnn.t7) | [9.85 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2ch2stream/2ch2stream_liberty_cudnn.t7) | [4.15 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2chdeep/2chdeep_liberty_cudnn.t7) | [5.62 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam/siam_liberty_cudnn.t7) | [17.71 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam2stream/siam2stream_liberty_cudnn.t7) |
+| yosemite | [3.49 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2ch/2ch_yosemite.t7) | [9.74 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2ch2stream/2ch2stream_yosemite.t7) | [4.15 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2chdeep/2chdeep_yosemite.t7) | [7.95 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam/siam_yosemite.t7) | [22.36 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam2stream/siam2stream_yosemite.t7) |
+| notredame | [3.49 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2ch/2ch_notredame.t7) | [9.74 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2ch2stream/2ch2stream_notredame.t7) | [4.15 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2chdeep/2chdeep_notredame.t7) | [7.95 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam/siam_notredame.t7) | [22.36 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam2stream/siam2stream_notredame.t7) |
+| liberty | [3.49 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2ch/2ch_liberty.t7) | [9.74 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2ch2stream/2ch2stream_liberty.t7) | [4.15 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2chdeep/2chdeep_liberty.t7) | [7.95 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam/siam_liberty.t7) | [22.36 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam2stream/siam2stream_liberty.t7) |
 
 #### binary format
 
@@ -100,7 +90,7 @@ N = 76  -- the number of patches to match
 patches = torch.rand(N,2,64,64):float()
 
 -- load the network
-net = torch.load'../networks/2ch/2ch_liberty_nn.t7'
+net = torch.load'../networks/2ch/2ch_liberty.t7'
 
 -- in place mean subtraction
 local p = patches:view(N,2,64*64)
@@ -110,7 +100,7 @@ p:add(-p:mean(3):expandAs(p))
 output = net:forward(patches)
 ```
 
-In fact, nn and cudnn are not the only backends for Torch, for a big number of patches it might be faster to use cuda-convnet2 or SpatialConvolutionFFT from facebook.
+Conversion to a faster `cudnn` backend is done by `cudnn.convert(net, cudnn)` function.
 
 ### C++ API
 
