@@ -38,6 +38,10 @@ Sergey Zagoruyko, Nikos Komodakis,
 }
 ```
 
+## Update 2 (February 2016) caffe models are released
+
+## Update 1 (January 2016) cudnn models removed because `cudnn.convert` was out
+
 ### Models
 
 We provide the models in Torch7 and binary format. The table from the paper is here for convenience.
@@ -237,3 +241,10 @@ and run it:
 ```
 
 You have to use descriptor matching network in this example. Check the example code for explanation.
+
+
+### CAFFE
+
+Thanks to the awesome @ajtulloch's [torch2caffe](https://github.com/facebook/fb-caffe-exts) models were converted to CAFFE format. Unfortunatelly only _siam_, _2ch_ and _2chdeep_ models could be converted at the time, other models will be converted as missing functionality is added to CAFFE.
+
+*Download link*: https://www.dropbox.com/s/g12lu453tkvf95q/cvpr2015networks-caffe.tar.gz
