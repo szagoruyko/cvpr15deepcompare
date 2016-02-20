@@ -38,9 +38,9 @@ Sergey Zagoruyko, Nikos Komodakis,
 }
 ```
 
-## Update 2 (February 2016) caffe models are released
+**Update 2** (February 2016) caffe models are released
 
-## Update 1 (January 2016) cudnn models removed because `cudnn.convert` was out
+**Update 1** (January 2016) cudnn models removed because `cudnn.convert` was out
 
 ### Models
 
