@@ -119,15 +119,13 @@ local function getIterator(mode)
          local n = concat:size()
          local multi_idx = torch.range(1,n):view(2,-1):t():reshape(n)
 
-         return tnt.ResampleDataset{
-            dataset = concat,
-            sampler = function(dataset, idx)
-               return multi_idx[idx]
-            end,
-         }:batch(2):transform{
-            input = function(x) return x:view(-1,2,64,64) end,
-            target = function(y) return y:view(-1) end,
-         }
+         return concat
+            :sample(function(dataset, idx) return multi_idx[idx] end)
+            :batch(2)
+            :transform{
+               input = function(x) return x:view(-1,2,64,64) end,
+               target = function(y) return y:view(-1) end,
+            }
       end,
    }
 end
@@ -162,12 +160,11 @@ local meter = tnt.AverageValueMeter()
 local confusion = optim.ConfusionMatrix(2)
 local data_time_meter = tnt.AverageValueMeter()
 local fpr95meter = tnt.FPR95Meter()
-local test_enabled = false
 
 local inputs = cast(torch.Tensor())
 local targets = cast(torch.Tensor())
 engine.hooks.onSample = function(state)
-   if not test_enabled then
+   if state.training then
       data_time_meter:add(data_timer:time().real)
    end
    inputs:resize(state.sample.input:size()):copy(state.sample.input)
@@ -179,21 +176,17 @@ end
 engine.hooks.onForwardCriterion = function(state)
    meter:add(state.criterion.output)
    confusion:batchAdd(state.network.output:gt(0):add(1), state.sample.target:gt(0):add(1))
-   if test_enabled then
+   if not state.training then
       fpr95meter:add(state.network.output, state.sample.target)
    end
 end
 
 local function test()
-   test_enabled = true
-
    engine:test{
       network = model,
       iterator = getIterator'test',
       criterion = criterion,
    }
-
-   test_enabled = false
    confusion:updateValids()
    return fpr95meter:value()
 end
@@ -257,3 +250,7 @@ engine:train{
    config = tablex.deepcopy(opt),
    maxepoch = opt.max_epoch,
 }
+
+local modelpath = paths.concat(opt.save_folder, 'model.t7')
+print('Saving to '..modelpath)
+torch.save(modelpath, cudnn.convert(model, nn):float():clearState())
