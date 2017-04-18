@@ -9,14 +9,14 @@ CREDITS, LICENSE, CITATION
 
 Copyright © 2015 Ecole des Ponts, Universite Paris-Est
 
-All Rights Reserved. A license to use and copy this software and its documentation solely for your internal 
-research and evaluation  purposes, without fee and without a signed licensing agreement, is hereby granted 
-upon your download of the software, through which you agree to the following: 
-1)  the above copyright notice, this paragraph and the following three paragraphs will prominently appear 
-in all internal copies and modifications; 
-2)  no rights to sublicense or further distribute this software are granted; 
-3) no rights to modify this software are granted; and 
-4) no rights to assign this license are granted.   
+All Rights Reserved. A license to use and copy this software and its documentation solely for your internal
+research and evaluation  purposes, without fee and without a signed licensing agreement, is hereby granted
+upon your download of the software, through which you agree to the following:
+1)  the above copyright notice, this paragraph and the following three paragraphs will prominently appear
+in all internal copies and modifications;
+2)  no rights to sublicense or further distribute this software are granted;
+3) no rights to modify this software are granted; and
+4) no rights to assign this license are granted.
 
 Please Contact Prof. Nikos Komodakis,
 6 Avenue Blaise Pascal - Cite Descartes, Champs-sur-Marne, 77455 Marne-la-Vallee cedex 2, France for commercial licensing opportunities, or for further distribution, modification or license rights.
@@ -25,7 +25,7 @@ Created by Sergey Zagoruyko and Nikos Komodakis. http://imagine.enpc.fr/~komodak
 
 Please cite the paper below if you use this code in your research.
 
-Sergey Zagoruyko, Nikos Komodakis, 
+Sergey Zagoruyko, Nikos Komodakis,
 "Learning to Compare Image Patches via Convolutional Neural Networks". http://www.cv-foundation.org/openaccess/content_cvpr_2015/papers/Zagoruyko_Learning_to_Compare_2015_CVPR_paper.pdf, bib:
 
 ```
@@ -38,17 +38,31 @@ Sergey Zagoruyko, Nikos Komodakis,
 }
 ```
 
+**Update 4** (April 2017) dead links for models and datasets fixed
+
 **Update 3** (July 2016) training code released
 
 **Update 2** (February 2016) caffe models released
 
 **Update 1** (January 2016) cudnn models removed because `cudnn.convert` was out
 
+
+## Dataset
+
+The original dataset website is down, you can still download the files here:
+
+<http://www.iis.ee.ic.ac.uk/~vbalnt/phototourism-patches/notredame.zip><br>
+<http://www.iis.ee.ic.ac.uk/~vbalnt/phototourism-patches/yosemite.zip><br>
+<http://www.iis.ee.ic.ac.uk/~vbalnt/phototourism-patches/liberty.zip><br>
+
+
 ### Models
 
 We provide the models in Torch7 and binary format. The table from the paper is here for convenience.
 
 **All models expect input patches to be in [0;1] range before mean subtraction.**
+
+**The models are not supposed to give outputs in [0;1] range, the outputs are not normalized**
 
 | Train set | Test set | 2ch | 2ch2stream | 2chdeep | siam | siam2stream |
 | --- |  --- | :---: |  :---: |  :---: |  :---: |  :---: |
@@ -59,29 +73,10 @@ We provide the models in Torch7 and binary format. The table from the paper is h
 | liberty | yosemite | 7 | **5** | 6.18 | 14.76 | 9.39 |
 | liberty | notredame | 2.76 | **1.9** | 2.77 | 4.04 | 2.82 |
 
-To save time downloading models one by one run the script (downloads ~300MB):
-
-```
-./download_pack.sh
-```
-
-#### nn format
 
 Models in nn format can be loaded and used without CUDA support in Torch. To enable CUDA support ```model:cuda()``` call required.
 
-| Train Set | 2ch | 2ch2stream | 2chdeep | siam | siam2stream |
-| --- |  :---: |  :---: |  :---: |  :---: |  :---: |
-| yosemite | [3.49 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2ch/2ch_yosemite.t7) | [9.74 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2ch2stream/2ch2stream_yosemite.t7) | [4.15 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2chdeep/2chdeep_yosemite.t7) | [7.95 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam/siam_yosemite.t7) | [22.36 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam2stream/siam2stream_yosemite.t7) |
-| notredame | [3.49 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2ch/2ch_notredame.t7) | [9.74 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2ch2stream/2ch2stream_notredame.t7) | [4.15 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2chdeep/2chdeep_notredame.t7) | [7.95 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam/siam_notredame.t7) | [22.36 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam2stream/siam2stream_notredame.t7) |
-| liberty | [3.49 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2ch/2ch_liberty.t7) | [9.74 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2ch2stream/2ch2stream_liberty.t7) | [4.15 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2chdeep/2chdeep_liberty.t7) | [7.95 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam/siam_liberty.t7) | [22.36 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam2stream/siam2stream_liberty.t7) |
-
-#### binary format
-
-| Train Set | 2ch | 2ch2stream | 2chdeep | siam | siam2stream |
-| --- |  --- |  --- |  --- |  --- |  --- |
-| yosemite | [3.48 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2ch/2ch_yosemite.bin) | [8.98 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2ch2stream/2ch2stream_yosemite.bin) | [4.13 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2chdeep/2chdeep_yosemite.bin) | [4.47 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam/siam_yosemite.bin) | [13.17 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam2stream/siam2stream_yosemite.bin) |
-| notredame | [3.48 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2ch/2ch_notredame.bin) | [8.98 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2ch2stream/2ch2stream_notredame.bin) | [4.13 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2chdeep/2chdeep_notredame.bin) | [4.47 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam/siam_notredame.bin) | [13.17 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam2stream/siam2stream_notredame.bin) |
-| liberty | [3.48 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2ch/2ch_liberty.bin) | [8.98 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2ch2stream/2ch2stream_liberty.bin) | [4.13 MB](https://dl.dropboxusercontent.com/u/44617616/networks/2chdeep/2chdeep_liberty.bin) | [4.47 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam/siam_liberty.bin) | [13.17 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam2stream/siam2stream_liberty.bin) |
+An archive with all models (binary and in torch format) is available at <https://www.dropbox.com/s/7l2912lrlptyyaz/cvpr2015matching_networks.tar.gz?dl=0>
 
 ### Torch
 
@@ -159,7 +154,7 @@ After you build everything and download the networks run test with ```run_test.s
 
 ### MATLAB
 
-Building Matlab bindings requires a little bit of user intervention. Open matlab/make.m file in Matlab and put your paths to Matlab and include/lib paths of TH and THC, then run ```>> make```. Mex file will be created. 
+Building Matlab bindings requires a little bit of user intervention. Open matlab/make.m file in Matlab and put your paths to Matlab and include/lib paths of TH and THC, then run ```>> make```. Mex file will be created.
 
 To initialize the interface do
 
