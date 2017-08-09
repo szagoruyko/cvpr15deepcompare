@@ -30,8 +30,8 @@ parser.add_argument('--test_matches', default='m50_100000_100000_0.txt', type=st
 def get_iterator(dataset, batch_size, nthread):
     def get_list_dataset(pair_type):
         ds = ListDataset(elem_list=dataset[pair_type],
-                         load=lambda idx: {'input': np.stack((dataset['patches'][v].float().numpy()
-                                                              - dataset['patches_mean'][v][0]) / 256.0 for v in idx),
+                         load=lambda idx: {'input': np.stack((dataset['patches'][v].astype(np.float32)
+                                                              - dataset['mean'][v]) / 256.0 for v in idx),
                                            'target': 1 if pair_type == 'matches' else -1})
         ds = ds.transform({'input': torch.from_numpy, 'target': lambda x: torch.LongTensor([x])})
 
@@ -166,10 +166,10 @@ def main(args):
     def load_provider():
         print('Loading test data')
 
-        p = load_lua(opt.test_set)
+        p = np.load(opt.test_set)[()]
 
-        for t in ['matches', 'nonmatches']:
-            p[t] = p[1][opt.test_matches][t]
+        for i, t in enumerate(['matches', 'nonmatches']):
+            p[t] = p['match_data'][opt.test_matches][i]
 
         return p
 
@@ -239,4 +239,4 @@ def main(args):
 
 
 if __name__ == '__main__':
-    main(sys.argv)
+    main(sys.argv[1:])
