@@ -51,9 +51,9 @@ Sergey Zagoruyko, Nikos Komodakis,
 
 The original dataset website is down, you can still download the files here:
 
-<http://www.iis.ee.ic.ac.uk/~vbalnt/phototourism-patches/notredame.zip><br>
-<http://www.iis.ee.ic.ac.uk/~vbalnt/phototourism-patches/yosemite.zip><br>
-<http://www.iis.ee.ic.ac.uk/~vbalnt/phototourism-patches/liberty.zip><br>
+<http://icvl.ee.ic.ac.uk/vbalnt/notredame.zip><br>
+<http://icvl.ee.ic.ac.uk/vbalnt/yosemite.zip><br>
+<http://icvl.ee.ic.ac.uk/vbalnt/liberty.zip><br>
 
 
 ### Models
