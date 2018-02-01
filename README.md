@@ -76,7 +76,7 @@ We provide the models in Torch7 and binary format. The table from the paper is h
 
 Models in nn format can be loaded and used without CUDA support in Torch. To enable CUDA support ```model:cuda()``` call required.
 
-An archive with all models (binary and in torch format) is available at <https://www.dropbox.com/s/7l2912lrlptyyaz/cvpr2015matching_networks.tar.gz?dl=0>
+An archive with all models (binary and in torch format) is available at: <https://s3.amazonaws.com/modelzoo-networks/cvpr2015matching_networks.tar.gz>
 
 ### Torch
 
@@ -199,17 +199,17 @@ To enable splitting the computations of descriptor and decision parts in siamese
 
 | Train Set | siam_desc | siam_decision |
 | --- | :---: |  :---: |
-| yosemite | [3.47 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam/siam_desc_yosemite.bin) | [1.00 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam/siam_decision_yosemite.bin) |
-| notredame | [3.47 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam/siam_desc_notredame.bin) | [1.00 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam/siam_decision_notredame.bin) |
-| liberty | [3.47 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam/siam_desc_liberty.bin) | [1.00 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam/siam_decision_liberty.bin) |
+| yosemite | 3.47 MB,siam_desc_yosemite.bin | 1.00 MB,siam_decision_yosemite.bin |
+| notredame | 3.47 MB,siam_desc_notredame.bin | 1.0MB,siam_decision_notredame.bin |
+| liberty | 3.47 MB,siam_desc_liberty.bin | 1.00 MB,siam_decision_liberty.bin |
 
 * siam-2stream network:
 
 | Train Set | siam2stream_desc | siam2stream_decision |
 | --- |  :---: |  :---: |
-| yosemite | [9.16 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam2stream/siam2stream_desc_yosemite.bin) | [4.01 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam2stream/siam2stream_decision_yosemite.bin) |
-| notredame | [9.16 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam2stream/siam2stream_desc_notredame.bin) | [4.01 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam2stream/siam2stream_decision_notredame.bin) |
-| liberty | [9.16 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam2stream/siam2stream_desc_liberty.bin) | [4.01 MB](https://dl.dropboxusercontent.com/u/44617616/networks/siam2stream/siam2stream_decision_liberty.bin) |
+| yosemite | 9.16 MB,siam2stream_desc_yosemite.bin | 4.01 MB,siam2stream_decision_yosemite.bin |
+| notredame | 9.16 MB,siam2stream_desc_notredame.bin | 4.01 MB,siam2stream_decision_notredame.bin |
+| liberty | 9.16 MB,siam2stream_desc_liberty.bin | 4.01 MB,siam2stream_decision_liberty.bin |
 
 
 ### OpenCV
@@ -244,4 +244,4 @@ You have to use descriptor matching network in this example. Check the example c
 
 Thanks to the awesome @ajtulloch's [torch2caffe](https://github.com/facebook/fb-caffe-exts) models were converted to CAFFE format. Unfortunatelly only _siam_, _2ch_ and _2chdeep_ models could be converted at the time, other models will be converted as missing functionality is added to CAFFE.
 
-*Download link*: https://www.dropbox.com/s/g12lu453tkvf95q/cvpr2015networks-caffe.tar.gz
+*Download link*: <https://s3.amazonaws.com/modelzoo-networks/cvpr2015networks-caffe.tar>
