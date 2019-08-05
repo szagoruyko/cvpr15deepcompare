@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ ! -f test_data.bin ]; then
-  wget https://dl.dropboxusercontent.com/u/44617616/test_data.bin
+  cp ./data/test_data.bin ./test_data.bin
 fi
 
 if [ ! -d networks ]; then
